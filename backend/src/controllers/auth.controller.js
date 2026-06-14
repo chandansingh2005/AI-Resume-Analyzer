@@ -104,5 +104,30 @@ async function logout(req, res) {
 
 }
 
+async function getProfile(req, res) {
 
-module.exports = { registerUser, loginUser, logout }
+    try {
+        const userId = req.user.id;
+        const user = await userModel.findById(userId).select("-password");
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" })
+        }
+        res.status(200).json({
+            message: "User profile fetched successfully",
+            data: user
+
+        });
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({message:"Internal server Error "})
+
+    }
+
+
+
+
+}
+
+module.exports = { registerUser, loginUser, logout, getProfile }
