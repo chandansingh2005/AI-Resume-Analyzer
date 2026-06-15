@@ -11,6 +11,7 @@ async function createResume(req, res) {
             return res.status(400).json({ message: "Title and fileUrl are required" })
         }
 
+        // checking existing resume 
         const existingResume = await resumeModel.findOne({
             userId,
             title
@@ -60,10 +61,36 @@ async function getUserResume(req, res) {
     } catch (error) {
         console.error(error);
         return res.status(500).json({
-            message: "Internal Server Erroe"
+            message: "Internal Server Error"
         })
 
     }
 }
 
-module.exports = { createResume, getUserResume }
+
+async function deleteResume(req, res) {
+    try {
+        const resumeId = req.params.id;
+
+        const deleteResume = await resumeModel.findByIdAndDelete({
+            _id: resumeId,
+            userId: req.params.id
+        });
+        if (!deleteResume) {
+            return res.status(404).json({ message: "Resume not found" });
+        }
+
+        return res.status(200).json({
+            message: "Resume deleted successfully"
+        });
+
+    } catch (error) {
+        console.error(error);
+
+        return res.status(500).json({
+            message: "Internal server error"
+        });
+    }
+}
+
+module.exports = { createResume, getUserResume, deleteResume }
