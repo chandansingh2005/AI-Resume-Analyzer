@@ -2,7 +2,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser')
 
 const authRoutes = require('./routes/auth.routes');
-const resumeRouter=require('./routes/resume.routes');
+const resumeRouter = require('./routes/resume.routes');
 
 
 const app = express();
@@ -15,7 +15,14 @@ app.get('/', (req, res) => {
 
 
 app.use('/api/auth', authRoutes);
-app.use('/api/resume',resumeRouter)
+app.use('/api/resume', resumeRouter)
+
+// Error Handler
+app.use((err, req, res, next) => {
+    return res.status(400).json({
+        message: err.message
+    });
+});
 
 
 module.exports = app;

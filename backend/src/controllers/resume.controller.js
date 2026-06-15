@@ -1,49 +1,61 @@
 const resumeModel = require('../models/resume.model');
 
 async function createResume(req, res) {
-
     try {
         const userId = req.user.id;
-        const { title, fileUrl, skills } = req.body;
+        const { title, skills } = req.body;
 
-        // check validation
-        if (!title || !fileUrl) {
-            return res.status(400).json({ message: "Title and fileUrl are required" })
+        if (!req.file) {
+            return res.status(400).json({
+                message: "Resume PDF is required"
+            });
         }
 
-        // checking existing resume 
+        const fileUrl = req.file.path;
+
+        if (!title) {
+            return res.status(400).json({
+                message: "Title is required"
+            });
+        }
+
         const existingResume = await resumeModel.findOne({
             userId,
             title
         });
 
         if (existingResume) {
+
+            // delete uploaded file
+            const fs = require('fs');
+            if (req.file) {
+                fs.unlinkSync(req.file.path);
+            }
             return res.status(409).json({
                 message: "Resume with this title already exists"
-            })
+            });
         }
 
-
+        const skillsArrays = skills ? skills.split(",").map(skill => skill.trim()) : [];
         const resume = await resumeModel.create({
             userId,
             title,
             fileUrl,
-            skills
-
-        })
+            skills: skillsArrays
+        });
 
         return res.status(201).json({
             message: "Resume created successfully",
             resumeId: resume._id,
-            data: resume,
-        })
+            data: resume
+        });
 
     } catch (error) {
         console.error(error);
-        return res.status(500).json({
-            message: "Internal error"
-        })
 
+        return res.status(500).json({
+            message: "Internal Server Error"
+        });
     }
 }
 
