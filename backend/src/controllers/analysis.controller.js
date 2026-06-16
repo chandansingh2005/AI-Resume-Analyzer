@@ -1,5 +1,8 @@
 const { extractTextFromPDF } = require('../services/parser.service');
 const resumeModel = require('../models/resume.model')
+
+const { analyzeResumeWithAI } = require('../services/ai.service')
+
 async function analyzeResume(req, res) {
 
     try {
@@ -28,4 +31,20 @@ async function analyzeResume(req, res) {
 
 }
 
-module.exports = { analyzeResume };
+async function testAI(req, res) {
+
+    try {
+        const response = await analyzeResumeWithAI();
+        return res.status(200).json({
+            success: true,
+            response
+        });
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: error.message })
+
+    }
+}
+
+module.exports = { analyzeResume, testAI };
