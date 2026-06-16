@@ -7,17 +7,28 @@ async function analyzeResume(req, res) {
 
     try {
         const resumeId = req.params.id;
-        const resume = await resumeModel.findById(resumeId);
+        const resume = await resumeModel.findOne({
+            _id: resumeId,
+            userId: req.user.id
+        });
 
         if (!resume) {
             return res.status(404).json({ message: "Resume not found" })
         }
 
+        // This line for text
         const extractedText = await extractTextFromPDF(resume.fileUrl)
 
+        // This line for ai response 
+        const aiResponse = await analyzeResumeWithAI(extractedText);
+
+        // save in MongoDB
+        resume.analysis = aiResponse;
+        await resume.save();
+
         return res.status(200).json({
-            message: "Resume text extracted successfully",
-            extractedText
+            success: true,
+            analysis: aiResponse
         });
 
     } catch (error) {
@@ -31,20 +42,6 @@ async function analyzeResume(req, res) {
 
 }
 
-async function testAI(req, res) {
 
-    try {
-        const response = await analyzeResumeWithAI();
-        return res.status(200).json({
-            success: true,
-            response
-        });
 
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: error.message })
-
-    }
-}
-
-module.exports = { analyzeResume, testAI };
+module.exports = { analyzeResume };

@@ -4,34 +4,47 @@ const resumeSchema = new mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
       required: true,
+      ref: "User"
     },
 
     title: {
       type: String,
-      required: true,
-      trim: true,
+      required: true
     },
 
     fileUrl: {
       type: String,
-      required: true,
+      required: true
     },
 
-    skills: [
-      {
-        type: String,
-      },
-    ],
+    skills: [{
+      type: String
+    }],
 
     score: {
       type: Number,
-      default: 0,
+      default: 0
     },
+
+    analysis: {
+      atsScore: Number,
+      resumeSummary: String,
+      strengths: [String],
+      weaknesses: [String],
+      missingSkills: [String],
+      recommendedRoles: [String],
+
+      keywordAnalysis: {
+        present: [String],
+        missing: [String]
+      },
+
+      suggestions: [String]
+    }
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 
