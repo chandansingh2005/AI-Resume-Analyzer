@@ -32,10 +32,11 @@ async function analyzeResume(req, res) {
         });
 
     } catch (error) {
-        console.error(error);
+        console.error("ANALYSIS ERROR:", error);
         return res.status(500).json({
-            message: "Internal Server Error"
-        })
+            message: error.message,
+            error
+        });
 
     }
 
