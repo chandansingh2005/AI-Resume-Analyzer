@@ -1,16 +1,26 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Dashboard from './pages/Dashboard';
+import UploadResume from './pages/UploadResume'
 
 function App() {
-  return (
-    <div className="bg-pink-700">
-      <section className="main-section">
-        <div className="page-heading">
-          <h1>Track Your Application & Resume Rating</h1>
-          <h2>Review your submission and check Ai-Powered feedback</h2>
-        </div>
-      </section>
-    </div>
-  )
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Login />} />
+
+                <Route path="/register" element={<Register />} />
+
+                <Route path="/dashboard" element={<Dashboard />} />
+
+                <Route path="/upload" element={<UploadResume/>} />
+
+            </Routes>
+
+        </BrowserRouter>
+    )
 }
 
 export default App
