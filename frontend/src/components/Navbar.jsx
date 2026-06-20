@@ -1,14 +1,24 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X, LayoutDashboard, Upload, LogOut, } from "lucide-react";
-
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 
+
+
 function Navbar() {
+    const navigate = useNavigate();
+    const { logout } = useAuth();
+
     const [open, setOpen] = useState(false);
     const { isAuthenticated } = useAuth();
     console.log(isAuthenticated);
+
+    const handleLogout = () => {
+        logout();
+        navigate("/");
+    };
 
     return (
         <nav className="sticky top-0 z-50 bg-slate-950/90 backdrop-blur border-b border-slate-800">
@@ -58,7 +68,7 @@ function Navbar() {
                             Upload Resume
                         </Link>
 
-                        <button
+                        <button onClick={handleLogout}
                             className="px-4 py-2
                                    rounded-lg
                                    bg-gradient-to-r
@@ -105,7 +115,7 @@ function Navbar() {
                                 Upload Resume
                             </Link>
 
-                            <button className="flex items-center gap-2 text-red-400">
+                            <button onClick={handleLogout} className="flex items-center gap-2 text-red-400">
                                 <LogOut size={18} />
                                 Logout
                             </button>

@@ -3,7 +3,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from './pages/Dashboard';
-import UploadResume from './pages/UploadResume'
+import UploadResume from './pages/UploadResume';
+import ProtectedRoute from "./components/ProtectedRoute";
+import { Upload } from "lucide-react";
 
 function App() {
     return (
@@ -13,9 +15,17 @@ function App() {
 
                 <Route path="/register" element={<Register />} />
 
-                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/dashboard" element={
+                    <ProtectedRoute>
+                        <Dashboard />
+                    </ProtectedRoute>} />
 
-                <Route path="/upload" element={<UploadResume/>} />
+                <Route path="/upload" element={
+                    <ProtectedRoute>
+                        <Upload />
+                    </ProtectedRoute>
+                }
+                />
 
             </Routes>
 

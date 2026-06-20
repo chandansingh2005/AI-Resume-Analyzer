@@ -8,7 +8,9 @@ import toast from "react-hot-toast";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  
 
+ 
   const navigate = useNavigate();
   const { login } = useAuth();
 
@@ -20,8 +22,9 @@ function Login() {
         email,
         password
       });
+      console.log(response.data)
       login(response.data.token);
-      alert("Login Successfully");
+      
       toast.success("Login Successful");
       navigate("/dashboard");
 
