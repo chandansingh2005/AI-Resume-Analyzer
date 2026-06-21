@@ -61,6 +61,9 @@ function Navbar() {
                             Dashboard
                         </Link>
 
+                        <Link to="/my-resumes">
+                            My Resumes
+                        </Link>
                         <Link
                             to="/upload"
                             className="hover:text-cyan-400 transition"
@@ -105,6 +108,9 @@ function Navbar() {
                             >
                                 <LayoutDashboard size={18} />
                                 Dashboard
+                            </Link>
+                            <Link to="/my-resumes">
+                                My Resumes
                             </Link>
 
                             <Link

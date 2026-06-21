@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Layout from "../components/Layout";
 import { UploadCloud } from "lucide-react";
+import api from "../api/axios";
+import toast from "react-hot-toast";
 
 function UploadResume() {
   const [file, setFile] = useState(null);
@@ -13,9 +15,50 @@ function UploadResume() {
     }
   };
 
-  const handleAnalyze = () => {
-    // Add your submission logic here
-    console.log({ file, title, skills });
+  const handleAnalyze = async () => {
+
+    if (!file) {
+      toast.error("Please select a resume");
+      return;
+    }
+
+    try {
+
+      const formData = new FormData();
+
+      formData.append("title", title);
+      formData.append("skills", skills);
+      formData.append("resume", file);
+
+      const token = localStorage.getItem("token");
+
+      const response = await api.post(
+        "/resume",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+
+
+      toast.success("Resume Uploaded Successfully");
+
+      setTitle("");
+      setSkills("");
+      setFile(null);
+
+    } catch (error) {
+
+      console.log(error);
+
+      toast.error(
+        error.response?.data?.message ||
+        "Upload Failed"
+      );
+    }
   };
 
   return (
@@ -34,7 +77,7 @@ function UploadResume() {
         {/* Drag & Drop Upload Zone */}
         <div className="bg-slate-900 border-2 border-dashed border-slate-700 rounded-2xl p-10 text-center hover:border-cyan-500 transition-all duration-300">
           <UploadCloud size={60} className="mx-auto text-cyan-400 mb-4" />
-          
+
           <h2 className="text-xl font-semibold text-white">
             Drag & Drop Resume
           </h2>
@@ -91,7 +134,7 @@ function UploadResume() {
             onClick={handleAnalyze}
             className="w-full py-3 mt-2 rounded-xl bg-gradient-to-r from-cyan-500 to-violet-500 font-semibold text-white hover:scale-[1.01] active:scale-95 transition-all"
           >
-            Analyze Resume
+            Upload Resume
           </button>
         </div>
       </div>
