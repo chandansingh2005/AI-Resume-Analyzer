@@ -29,6 +29,22 @@ function MyResumes() {
         }
     };
 
+    const handleDelete = async (resumeId) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this resume?");
+        if (!confirmDelete) return;
+
+        try {
+            await api.delete(`/resume/${resumeId}`);
+            toast.success("Resume deleted successfully");
+            fetchResumes(); // Refresh data grid list
+        } catch (error) {
+            console.error("Error deleting resume:", error);
+
+            // Fallback error fallback if backend sends a custom message
+            const errorMessage = error.response?.data?.message || "Failed to delete resume";
+            toast.error(errorMessage);
+        }
+    };
     const fetchResumes = async () => {
 
         try {
@@ -78,13 +94,13 @@ function MyResumes() {
                                 onClick={() => handleAnalyze(resume._id)}
                                 className="px-4 py-2 rounded-lg bg-cyan-500 text-white cursor-pointer"
                             >
-                                Analyze Resume
+                                {resume.analysis?.atsScore ? "View Analysis" : "Analyze Resume"}
                             </button>
-
                             <button
-                                className="px-4 py-2 rounded-lg bg-red-500 text-white"
+                                onClick={() => handleDelete(resume._id)}
+                                className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg font-medium transition-colors duration-200 cursor-pointer inline-flex items-center justify-center gap-2 shadow-sm"
                             >
-                                Delete
+                                <span>Delete</span>
                             </button>
 
                         </div>

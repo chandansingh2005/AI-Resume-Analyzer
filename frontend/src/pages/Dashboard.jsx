@@ -1,27 +1,50 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
+import api from "../api/axios";
 import { FileText, Brain, Briefcase, Award } from "lucide-react";
 
 function Dashboard() {
+  const [dashboard, setDashboard] = useState({
+    averageScore: 0,
+    totalResumes: 0,
+    analysisCount: 0,
+    jobMatches: 0,
+    bestResume: "",
+    latestResume: "",
+  });
+
+  useEffect(() => {
+    fetchDashboard();
+  }, []);
+
+  const fetchDashboard = async () => {
+    try {
+      const response = await api.get("/dashboard");
+      setDashboard(response.data);
+    } catch (error) {
+      console.error("Error fetching dashboard data:", error);
+    }
+  };
+
   const cards = [
     {
       title: "ATS Score",
-      value: "80%",
+      value: `${dashboard.averageScore}%`,
       icon: Award,
     },
     {
       title: "Total Resumes",
-      value: "5",
+      value: dashboard.totalResumes,
       icon: FileText,
     },
     {
       title: "Analyses",
-      value: "12",
+      value: dashboard.analysisCount,
       icon: Brain,
     },
     {
       title: "Job Matches",
-      value: "8",
+      value: dashboard.jobMatches,
       icon: Briefcase,
     },
   ];
@@ -29,32 +52,37 @@ function Dashboard() {
   return (
     <Layout>
       <div className="space-y-10 p-6 max-w-7xl mx-auto">
-        {/* Header Section */}
+        
+        {/* Welcome Header */}
         <div>
-          <h1 className="text-3xl font-bold text-white">Welcome Back 👋</h1>
+          <h1 className="text-3xl font-bold text-white">
+            Welcome Back 👋
+          </h1>
           <p className="text-slate-400 mt-2">
             Track your resume performance and ATS insights.
           </p>
         </div>
 
-        {/* Stats Grid */}
+        {/* Metric Cards Grid */}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {cards.map((card, index) => {
             const Icon = card.icon;
-
             return (
               <div
                 key={index}
-                className="bg-slate-900 border border-slate-800 rounded-2xl p-6 hover:border-cyan-500 hover:-translate-y-1 transition-all duration-300"
+                className="bg-slate-900 border border-slate-800 rounded-2xl p-6 hover:border-cyan-500/50 transition-all duration-200 shadow-sm"
               >
-                <div className="flex items-center justify-between">
+                <div className="flex justify-between items-center">
                   <div>
-                    <p className="text-slate-400 text-sm font-medium">{card.title}</p>
-                    <h2 className="text-3xl font-bold mt-3 text-white">{card.value}</h2>
+                    <p className="text-slate-400 text-sm font-medium">
+                      {card.title}
+                    </p>
+                    <h2 className="text-3xl text-white font-bold mt-3">
+                      {card.value}
+                    </h2>
                   </div>
-
-                  <div className="p-3 rounded-xl bg-gradient-to-r from-cyan-500 to-violet-500 text-white">
-                    <Icon size={24} />
+                  <div className="bg-cyan-500/10 p-3 rounded-xl border border-cyan-500/20">
+                    <Icon className="text-cyan-400 h-6 w-6" />
                   </div>
                 </div>
               </div>
@@ -62,24 +90,27 @@ function Dashboard() {
           })}
         </div>
 
-        {/* Recent Activity Section */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6">
-          <h2 className="text-xl font-semibold mb-4 text-white">
-            Recent Activity
+        {/* Insights Panel */}
+        <div className="bg-slate-900 rounded-2xl p-6 border border-slate-800">
+          <h2 className="text-white text-xl font-semibold mb-4">
+            Resume Insights
           </h2>
-
           <div className="space-y-4 text-slate-300">
-            <div className="border-b border-slate-800 pb-3">
-              Resume uploaded successfully
-            </div>
-            <div className="border-b border-slate-800 pb-3">
-              ATS score improved from 72% to 80%
-            </div>
-            <div className="pt-1">
-              3 new matching jobs found
-            </div>
+            <p className="flex items-center">
+              <span className="text-slate-400 min-w-[120px]">Best Resume:</span>
+              <span className="text-cyan-400 font-medium ml-2 bg-slate-800/50 px-3 py-1 rounded-lg border border-slate-700/30">
+                {dashboard.bestResume || "No Resume Available"}
+              </span>
+            </p>
+            <p className="flex items-center">
+              <span className="text-slate-400 min-w-[120px]">Latest Resume:</span>
+              <span className="text-cyan-400 font-medium ml-2 bg-slate-800/50 px-3 py-1 rounded-lg border border-slate-700/30">
+                {dashboard.latestResume || "No Resume Available"}
+              </span>
+            </p>
           </div>
         </div>
+
       </div>
     </Layout>
   );

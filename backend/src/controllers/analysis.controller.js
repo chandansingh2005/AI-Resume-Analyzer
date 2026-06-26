@@ -15,6 +15,15 @@ async function analyzeResume(req, res) {
         if (!resume) {
             return res.status(404).json({ message: "Resume not found" })
         }
+        // Return saved analysis if already analyzed
+        if (resume.analysis && resume.analysis.atsScore) {
+            return res.status(200).json({
+                success: true,
+                message: "Resume already analyzed",
+                analysis: resume.analysis,
+                cached: true
+            });
+        }
 
         // This line for text
         const extractedText = await extractTextFromPDF(resume.fileUrl)

@@ -8,6 +8,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { Upload } from "lucide-react";
 import MyResumes from './pages/MyResumes'
 import ResumeDetails from './pages/ResumeDetails'
+import Profile from "./pages/Profile";
+
 
 function App() {
     return (
@@ -40,6 +42,14 @@ function App() {
                     </ProtectedRoute>
                 }
                 />
+                 <Route path="/profile" element={
+                    <ProtectedRoute>
+                        <Profile />
+                    </ProtectedRoute>
+                }
+                />
+                
+
 
             </Routes>
 

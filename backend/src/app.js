@@ -4,6 +4,8 @@ const cookieParser = require('cookie-parser')
 const authRoutes = require('./routes/auth.routes');
 const resumeRouter = require('./routes/resume.routes');
 const analysisRouter = require('./routes/analysis.routes');
+const dashboardRoutes = require("./routes/dashboard.routes");
+const userRoutes = require("./routes/user.routes");
 
 const app = express();
 const cors = require('cors');
@@ -24,6 +26,9 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/resume', resumeRouter)
 app.use('/api/analysis', analysisRouter);
+app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/user", userRoutes);
+
 
 // Error Handler
 app.use((err, req, res, next) => {

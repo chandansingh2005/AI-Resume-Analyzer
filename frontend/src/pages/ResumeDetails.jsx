@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Layout from "../components/Layout";
 import api from "../api/axios";
 
 function ResumeDetails() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [resume, setResume] = useState(null);
 

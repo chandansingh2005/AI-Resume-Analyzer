@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, LayoutDashboard, Upload, LogOut, } from "lucide-react";
+import { Menu, X, LayoutDashboard, Upload, FileUser, LogOut, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
@@ -70,6 +70,12 @@ function Navbar() {
                         >
                             Upload Resume
                         </Link>
+                        <Link
+                            to="/profile"
+                            className="hover:text-cyan-400 transition"
+                        >
+                            Profile
+                        </Link>
 
                         <button onClick={handleLogout}
                             className="px-4 py-2
@@ -109,7 +115,10 @@ function Navbar() {
                                 <LayoutDashboard size={18} />
                                 Dashboard
                             </Link>
-                            <Link to="/my-resumes">
+
+                            <Link to="/my-resumes"
+                            className="flex items-center gap-2" >
+                                 < FileUser size={18} />
                                 My Resumes
                             </Link>
 
@@ -119,6 +128,13 @@ function Navbar() {
                             >
                                 <Upload size={18} />
                                 Upload Resume
+                            </Link>
+                            <Link
+                                to="/profile"
+                                className="flex items-center gap-2"
+                            >
+                                <User size={18} />
+                                Profile
                             </Link>
 
                             <button onClick={handleLogout} className="flex items-center gap-2 text-red-400">
