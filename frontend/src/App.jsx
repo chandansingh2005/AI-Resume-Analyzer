@@ -5,7 +5,6 @@ import Register from "./pages/Register";
 import Dashboard from './pages/Dashboard';
 import UploadResume from './pages/UploadResume';
 import ProtectedRoute from "./components/ProtectedRoute";
-import { Upload } from "lucide-react";
 import MyResumes from './pages/MyResumes'
 import ResumeDetails from './pages/ResumeDetails'
 import Profile from "./pages/Profile";
