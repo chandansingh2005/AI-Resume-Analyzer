@@ -7,27 +7,69 @@ const ai = new GoogleGenAI({
 async function analyzeResumeWithAI(resumeText) {
 
     const prompt = `
-You are an ATS Resume Analyzer.
+You are an expert ATS Resume Analyzer.
 
-Analyze the following resume:
+Analyze the following resume carefully.
 
+Resume:
 ${resumeText}
+
+Instructions:
+1. Give an ATS score between 0-100.
+2. Write a professional resume summary.
+3. List strengths.
+4. List weaknesses.
+5. List missing technical skills.
+6. Recommend suitable job roles.
+7. Extract important resume keywords.
+8. Identify important ATS keywords that are missing.
+9. Give practical suggestions for improvement.
 
 Return ONLY valid JSON.
 
 {
-  "atsScore": number,
-  "resumeSummary": string,
-  "strengths": [],
-  "weaknesses": [],
-  "missingSkills": [],
-  "recommendedRoles": [],
+  "atsScore": 85,
+  "resumeSummary": "string",
+
+  "strengths": [
+    "string"
+  ],
+
+  "weaknesses": [
+    "string"
+  ],
+
+  "missingSkills": [
+    "string"
+  ],
+
+  "recommendedRoles": [
+    "string"
+  ],
+
   "keywordAnalysis": {
-      "present": [],
-      "missing": []
+    "present": [
+      "React",
+      "JavaScript",
+      "Node.js"
+    ],
+    "missing": [
+      "Docker",
+      "CI/CD",
+      "AWS"
+    ]
   },
-  "suggestions": []
+
+  "suggestions": [
+    "string"
+  ]
 }
+
+IMPORTANT:
+- keywordAnalysis.present MUST contain at least 8 important resume keywords.
+- keywordAnalysis.missing MUST contain at least 5 missing ATS keywords whenever possible.
+- Never leave keywordAnalysis empty.
+- Return ONLY JSON.
 `;
     const response = await ai.models.generateContent({
         model: "gemini-2.5-flash",

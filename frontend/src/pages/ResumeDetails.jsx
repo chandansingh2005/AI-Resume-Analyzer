@@ -146,6 +146,51 @@ function ResumeDetails() {
         </div>
       </div>
 
+      {/* Keyword Analysis */}
+      <div className="bg-slate-900 rounded-xl p-6 border border-slate-800 mb-8">
+        <h2 className="text-xl font-bold text-cyan-400 mb-4">
+          ATS Keywords
+        </h2>
+
+        <div className="grid md:grid-cols-2 gap-6">
+
+          <div>
+            <h3 className="text-green-400 font-semibold mb-3">
+              Present Keywords
+            </h3>
+
+            <div className="flex flex-wrap gap-2">
+              {resume.analysis?.keywordAnalysis?.present?.map((keyword, index) => (
+                <span
+                  key={index}
+                  className="bg-green-500/10 text-green-400 border border-green-500/20 px-3 py-1 rounded-full text-sm"
+                >
+                  {keyword}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-red-400 font-semibold mb-3">
+              Missing Keywords
+            </h3>
+
+            <div className="flex flex-wrap gap-2">
+              {resume.analysis?.keywordAnalysis?.missing?.map((keyword, index) => (
+                <span
+                  key={index}
+                  className="bg-red-500/10 text-red-400 border border-red-500/20 px-3 py-1 rounded-full text-sm"
+                >
+                  {keyword}
+                </span>
+              ))}
+            </div>
+          </div>
+
+        </div>
+      </div>
+
       {/* Section: Recommended Roles */}
       <div className="bg-slate-900 rounded-xl p-6 border border-slate-800 mb-8">
         <h2 className="text-xl font-bold text-cyan-400 mb-4">

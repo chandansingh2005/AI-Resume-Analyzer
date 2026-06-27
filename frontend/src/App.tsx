@@ -9,6 +9,7 @@ import { Upload } from "lucide-react";
 import MyResumes from './pages/MyResumes'
 import ResumeDetails from './pages/ResumeDetails'
 import Profile from "./pages/Profile";
+import NotFound from "./pages/NotFound";
 
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
                     </ProtectedRoute>
                 }
                 />
+                <Route path="*" element={<NotFound />} />
                 
 
 
