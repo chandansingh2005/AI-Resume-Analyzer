@@ -8,12 +8,25 @@ function UploadResume() {
   const [file, setFile] = useState(null);
   const [title, setTitle] = useState("");
   const [skills, setSkills] = useState("");
+  
 
   const handleFileChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      setFile(e.target.files[0]);
+    const selectedFile = e.target.files?.[0];
+
+    if (!selectedFile) return;
+
+    if (selectedFile.type !== "application/pdf") {
+        toast.error("Please select a PDF file");
+        return;
     }
-  };
+
+    if (selectedFile.size > 5 * 1024 * 1024) {
+        toast.error("PDF must be under 5MB");
+        return;
+    }
+
+    setFile(selectedFile);
+};
 
   const handleAnalyze = async () => {
 
@@ -89,7 +102,7 @@ function UploadResume() {
             Choose Resume
             <input
               type="file"
-              accept=".pdf"
+              accept="application/pdf,.pdf"
               className="hidden"
               onChange={handleFileChange}
             />
