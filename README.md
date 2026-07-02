@@ -1,128 +1,196 @@
-# 🤖 AI Resume Analyzer
+# AI Resume Analyzer
 
-An AI-powered Resume Analyzer that evaluates resumes using Google Gemini AI and provides ATS insights, missing skills, keyword analysis, and recommended job roles.
+AI Resume Analyzer is a full-stack web application that helps users analyze their resumes using Google Gemini AI. The application generates an ATS score, identifies missing skills, highlights strengths and weaknesses, and recommends suitable job roles.
+
+I built this project to learn how AI can be integrated into a real-world web application while improving my full-stack development skills.
 
 ---
 
-# 🚀 Features
+## Live Demo
 
-### Authentication
+Frontend:
+https://ai-resume-analyzer-theta-pink.vercel.app
 
-* User Registration
-* User Login
-* JWT Authentication
-* Protected Routes
+Backend:
+https://ai-resume-analyzer-fi7f.onrender.com
 
-### Resume Management
+---
 
-* Upload Resume (PDF)
-* Cloudinary File Storage
-* View Uploaded Resumes
-* Delete Resume
+## Features
+
+### User Authentication
+
+- Register account
+- Login securely
+- JWT Authentication
+- Protected routes
+
+### Resume Upload
+
+- Upload PDF resumes
+- Store resumes securely using Cloudinary
+- View uploaded resumes
+- Delete resumes
 
 ### AI Resume Analysis
 
-* ATS Score
-* Resume Summary
-* Strengths
-* Weaknesses
-* Missing Skills
-* Recommended Job Roles
-* ATS Keyword Analysis
+After uploading a resume, the application generates:
 
-  * Present Keywords
-  * Missing Keywords
-* Resume Improvement Suggestions
+- ATS Score
+- Resume Summary
+- Strengths
+- Weaknesses
+- Missing Skills
+- Keyword Analysis
+- Job Recommendations
+- Resume Improvement Suggestions
 
 ### Dashboard
 
-* Average ATS Score
-* Total Resumes
-* Total Analyses
-* Job Match Count
-* Best Resume
-* Latest Resume
+- Total uploaded resumes
+- Average ATS Score
+- Total analyses
+- Job matches
+- Latest resume
+- Best performing resume
 
 ### Profile
 
-* User Information
-* Total Uploaded Resumes
-* Average ATS Score
-* Best ATS Score
-* Member Since
-
-### Performance Optimization
-
-* Analysis is saved in MongoDB.
-* Already analyzed resumes open instantly without calling Gemini API again.
+- User details
+- Total resumes uploaded
+- Average ATS score
+- Best ATS score
+- Account creation date
 
 ---
 
-# 🛠 Tech Stack
+## Tech Stack
 
-## Frontend
+### Frontend
 
-* React.js
-* React Router
-* Tailwind CSS
-* Axios
-* React Hot Toast
-* Lucide React
+- React
+- React Router
+- Tailwind CSS
+- Axios
+- React Hot Toast
+- Lucide React
 
-## Backend
+### Backend
 
-* Node.js
-* Express.js
-* MongoDB
-* Mongoose
-* JWT Authentication
-* Multer
-* Cloudinary
-* PDF-Parse
-* Google Gemini API
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JWT
+- Multer
+- Cloudinary
+- PDF Parse
+- Google Gemini API
 
 ---
 
-# 📂 Project Structure
+## Project Structure
 
 ```
-Frontend/
-Backend/
+AI-Resume-Analyzer
+│
+├── frontend
+├── backend
+├── screenshots
+└── README.md
 ```
 
 ---
 
-# 🔗 API Endpoints
+## Installation
 
-## Authentication
+Clone the repository
+
+```bash
+git clone https://github.com/yourusername/AI-Resume-Analyzer.git
+```
+
+### Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+### Backend
+
+```bash
+cd backend
+npm install
+npm start
+```
+
+---
+
+## Environment Variables
+
+### Backend (.env)
+
+```
+PORT=
+
+MONGODB_URI=
+
+JWT_SECRET=
+
+GEMINI_API_KEY=
+
+CLOUDINARY_CLOUD_NAME=
+
+CLOUDINARY_API_KEY=
+
+CLOUDINARY_API_SECRET=
+```
+
+### Frontend (.env)
+
+```
+VITE_API_URL=
+```
+
+---
+
+## API Endpoints
+
+### Authentication
 
 ```
 POST /auth/register
+
 POST /auth/login
 ```
 
-## Resume
+### Resume
 
 ```
 POST /resume
+
 GET /resume
+
 GET /resume/:id
+
 DELETE /resume/:id
 ```
 
-## Analysis
+### Analysis
 
 ```
 GET /analysis/:id
 ```
 
-## Dashboard
+### Dashboard
 
 ```
 GET /dashboard
 ```
 
-## Profile
+### Profile
 
 ```
 GET /profile
@@ -130,46 +198,95 @@ GET /profile
 
 ---
 
-# 📸 Screenshots
+## Screenshots
 
-* Login Page
-* Dashboard
-* Resume Upload
-* Resume Analysis
-* Profile Page
+### Login
 
-(Add screenshots after deployment.)
+![Login](screenshots/login.png)
 
----
+### Dashboard
 
-# 🚀 Deployment
+![Dashboard](screenshots/dashboard.png)
 
-Frontend:
+### Upload Resume
 
-* Vercel
+![Upload](screenshots/upload.png)
 
-Backend:
+### My Resume
 
-* Render
+![Resume](screenshots/resume.png)
 
-Database:
+### Profile
 
-* MongoDB Atlas
+![Profile](screenshots/profile.png)
 
----
+### Resume Analysis
 
-# 🔮 Future Improvements
+![Analysis](screenshots/analysis1.png)
 
-* Resume Comparison
-* Multiple Resume Versions
-* Job Description Upload & ATS Match
-* Recommend real job opportunities based on resume skills.
-* Add direct Apply Links for recommended jobs
-* Download Analysis Report (PDF)
-* AI Resume Builder
+![Analysis](screenshots/analysis2.png)
+
+![Analysis](screenshots/analysis3.png)
 
 ---
 
-# 👨‍💻 Author
+## What I Learned
 
-**Chandan Singh**
+While building this project, I learned:
+
+- Building REST APIs using Express.js
+- JWT Authentication
+- MongoDB with Mongoose
+- Uploading files using Multer
+- Storing PDFs in Cloudinary
+- Integrating Google Gemini API
+- Parsing PDF resumes
+- Deploying frontend and backend separately
+- Managing API communication between React and Express
+
+---
+
+## Challenges
+
+Some challenges I faced while building this project:
+
+- Extracting text correctly from PDF resumes
+- Integrating Gemini API responses into the application
+- Handling authentication securely
+- Deploying frontend and backend on different platforms
+- Reducing unnecessary AI API calls by saving analysis results in MongoDB
+
+---
+
+## Future Improvements
+
+Some features I plan to add in the future:
+
+- Resume Comparison
+- Resume Builder
+- ATS Match with Job Description
+- Resume Version History
+- Download Analysis Report as PDF
+- Real Job Recommendations
+- Cover Letter Generator
+
+---
+
+## Known Issue
+
+Currently, resume upload works properly on desktop browsers.
+
+Some mobile devices may fail to upload PDF files. I am working on fixing this issue.
+
+---
+
+## Author
+
+Chandan Singh
+
+GitHub:
+https://github.com/chandansingh2005
+
+---
+
+If you found this project helpful, feel free to star the repository.
