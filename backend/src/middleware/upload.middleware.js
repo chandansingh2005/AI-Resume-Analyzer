@@ -8,7 +8,7 @@ const storage = new CloudinaryStorage({
   params: async (req, file) => {
     // Strips out the original .pdf extension to avoid double extensions like file.pdf.pdf
     const uniqueFilename = Date.now() + "-" + file.originalname.replace(".pdf", "");
-    
+
     return {
       folder: "ai-resume-analyzer",
       resource_type: "raw", // Keep this as raw so pdf-parse can read it later
@@ -22,10 +22,24 @@ const upload = multer({
   storage,
   limits: { fileSize: 5 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
-    if (file.mimetype !== "application/pdf") {
-      return cb(new Error("Only PDF files are allowed"));
+
+    const allowedMimeTypes = [
+      "application/pdf",
+      "application/octet-stream"
+    ];
+
+    const isPdfExtension = file.originalname
+      .toLowerCase()
+      .endsWith(".pdf");
+
+    if (
+      allowedMimeTypes.includes(file.mimetype) &&
+      isPdfExtension
+    ) {
+      return cb(null, true);
     }
-    cb(null, true);
+
+    return cb(new Error("Only PDF files are allowed"));
   }
 });
 
